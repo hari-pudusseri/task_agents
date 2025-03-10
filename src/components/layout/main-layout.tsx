@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { Link, useLocation } from "react-router-dom";
@@ -12,6 +11,8 @@ import {
   SettingsIcon,
   Menu,
   X,
+  ChevronDown,
+  Bot
 } from "lucide-react";
 
 interface MainLayoutProps {
@@ -20,9 +21,10 @@ interface MainLayoutProps {
 
 export function MainLayout({ children }: MainLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [agentHubOpen, setAgentHubOpen] = useState(true);
   const location = useLocation();
 
-  const navItems = [
+  const agentHubItems = [
     {
       name: "Dashboard",
       path: "/",
@@ -56,7 +58,7 @@ export function MainLayout({ children }: MainLayoutProps) {
       <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b lg:hidden">
         <div className="flex items-center justify-between px-4 h-14">
           <Link to="/" className="font-semibold text-lg">
-            AI Agent Hub
+            Agents Demo
           </Link>
           <Button
             variant="ghost"
@@ -83,30 +85,54 @@ export function MainLayout({ children }: MainLayoutProps) {
           <div className="flex flex-col h-full">
             <div className="hidden lg:flex items-center h-14 px-6 border-b">
               <Link to="/" className="font-semibold text-lg">
-                AI Agent Hub
+                Agents Demo
               </Link>
             </div>
 
             <nav className="flex-1 overflow-y-auto p-3">
-              <ul className="space-y-1">
-                {navItems.map((item) => (
-                  <li key={item.path}>
-                    <Link
-                      to={item.path}
+              <div className="space-y-1">
+                {/* AI Agent Hub Section */}
+                <div>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-between"
+                    onClick={() => setAgentHubOpen(!agentHubOpen)}
+                  >
+                    <div className="flex items-center">
+                      <Bot className="h-5 w-5 mr-2" />
+                      <span className="font-medium">AI Agent Hub</span>
+                    </div>
+                    <ChevronDown 
                       className={cn(
-                        "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-secondary",
-                        location.pathname === item.path
-                          ? "bg-secondary text-accent"
-                          : "text-foreground"
-                      )}
-                      onClick={() => setSidebarOpen(false)}
-                    >
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.name}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+                        "h-4 w-4 transition-transform",
+                        agentHubOpen ? "transform rotate-180" : ""
+                      )} 
+                    />
+                  </Button>
+                  
+                  {agentHubOpen && (
+                    <ul className="mt-1 space-y-1 pl-7">
+                      {agentHubItems.map((item) => (
+                        <li key={item.path}>
+                          <Link
+                            to={item.path}
+                            className={cn(
+                              "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-secondary",
+                              location.pathname === item.path
+                                ? "bg-secondary text-accent"
+                                : "text-foreground"
+                            )}
+                            onClick={() => setSidebarOpen(false)}
+                          >
+                            <item.icon className="h-4 w-4" />
+                            <span>{item.name}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
             </nav>
 
             <div className="p-3 border-t">
