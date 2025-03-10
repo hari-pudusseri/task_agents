@@ -2,16 +2,19 @@
 //hari/mongodb101
 
 /*
-echo "# nagoya" >> README.md
+echo "# test" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
 git branch -M main
-git remote add origin https://github.com/hari-pudusseri/nagoya.git
+git remote add origin https://github.com/hari-pudusseri/task_agents.git
 git push -u origin main
 
-git pull https://github.com/hari-pudusseri/nagoya.git main
 
 To pull and commit 
+
+For Vite Script
+
+npm run dev
 
 */
