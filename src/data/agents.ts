@@ -1,4 +1,3 @@
-
 import { Agent, AgentStatus, Skill, Task, TaskPriority, TaskStatus } from '@/lib/types';
 
 export const skills: Skill[] = [
@@ -410,6 +409,125 @@ export const tasks: Task[] = [
     ],
     progressUpdates: [],
   },
+  {
+    id: 101,
+    title: "Market Analysis Report",
+    description: "Generated comprehensive market analysis report for Q1 2024, including competitor analysis and growth opportunities.",
+    status: TaskStatus.COMPLETED,
+    priority: TaskPriority.HIGH,
+    progress: 100,
+    agent: agents[0],
+    assignedAt: new Date('2024-03-01T10:00:00'),
+    completedAt: new Date('2024-03-02T15:30:00'),
+    messages: [],
+    progressUpdates: [
+      {
+        id: 1,
+        title: "Data Collection Started",
+        description: "Gathering market data from primary sources",
+        status: "completed",
+        timestamp: new Date('2024-03-01T10:15:00')
+      },
+      {
+        id: 2,
+        title: "Competitor Analysis",
+        description: "Analyzing top 5 competitors in the market",
+        status: "completed",
+        timestamp: new Date('2024-03-01T13:45:00')
+      },
+      {
+        id: 3,
+        title: "Growth Opportunities Identified",
+        description: "Identified 3 key growth areas based on market gaps",
+        status: "completed",
+        timestamp: new Date('2024-03-02T11:20:00')
+      },
+      {
+        id: 4,
+        title: "Report Generation",
+        description: "Final report compiled with all findings",
+        status: "completed",
+        timestamp: new Date('2024-03-02T15:30:00')
+      }
+    ]
+  },
+  {
+    id: 102,
+    title: "Content Optimization",
+    description: "Optimized website content for better SEO performance and user engagement.",
+    status: TaskStatus.COMPLETED,
+    priority: TaskPriority.MEDIUM,
+    progress: 100,
+    agent: agents[1],
+    assignedAt: new Date('2024-03-05T09:00:00'),
+    completedAt: new Date('2024-03-06T16:45:00'),
+    messages: [],
+    progressUpdates: [
+      {
+        id: 1,
+        title: "Content Audit",
+        description: "Analyzing current website content and performance metrics",
+        status: "completed",
+        timestamp: new Date('2024-03-05T09:30:00')
+      },
+      {
+        id: 2,
+        title: "Keyword Research",
+        description: "Identified high-value keywords and optimization opportunities",
+        status: "completed",
+        timestamp: new Date('2024-03-05T14:15:00')
+      },
+      {
+        id: 3,
+        title: "Content Updates",
+        description: "Implementing optimizations across all pages",
+        status: "completed",
+        timestamp: new Date('2024-03-06T12:00:00')
+      },
+      {
+        id: 4,
+        title: "Final Review",
+        description: "Quality check and performance verification complete",
+        status: "completed",
+        timestamp: new Date('2024-03-06T16:45:00')
+      }
+    ]
+  },
+  {
+    id: 103,
+    title: "Customer Support Analysis",
+    description: "Analyzed customer support tickets to identify common issues and improvement areas.",
+    status: TaskStatus.CANCELLED,
+    priority: TaskPriority.LOW,
+    progress: 45,
+    agent: agents[2],
+    assignedAt: new Date('2024-03-07T11:00:00'),
+    cancelledAt: new Date('2024-03-07T15:30:00'),
+    messages: [],
+    progressUpdates: [
+      {
+        id: 1,
+        title: "Data Collection",
+        description: "Gathering support tickets from the last 3 months",
+        status: "completed",
+        timestamp: new Date('2024-03-07T11:30:00')
+      },
+      {
+        id: 2,
+        title: "Initial Analysis",
+        description: "Categorizing tickets by issue type",
+        status: "completed",
+        timestamp: new Date('2024-03-07T13:45:00')
+      },
+      {
+        id: 3,
+        title: "Task Cancelled",
+        description: "Analysis cancelled due to data access issues",
+        status: "blocked",
+        timestamp: new Date('2024-03-07T15:30:00')
+      }
+    ]
+  }
 ];
 
 // Helper function to get user's active tasks
@@ -423,7 +541,10 @@ export function getUserActiveTasks() {
 
 // Helper function to get user's completed tasks
 export function getUserCompletedTasks() {
-  return tasks.filter(task => task.status === TaskStatus.COMPLETED);
+  return tasks.filter(task => 
+    task.status === TaskStatus.COMPLETED || 
+    task.status === TaskStatus.CANCELLED
+  );
 }
 
 // Helper function to get top-rated agents

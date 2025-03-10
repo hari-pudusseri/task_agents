@@ -1,4 +1,3 @@
-
 export enum AgentStatus {
   AVAILABLE = "available",
   BUSY = "busy",
