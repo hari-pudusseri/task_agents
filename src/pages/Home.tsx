@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { SearchInput } from '@/components/search-input';
 import { TaskList } from '@/components/task-list';
@@ -24,6 +23,11 @@ export default function Home() {
   
   const filteredAgents = searchQuery ? searchAgents(searchQuery) : [];
   const filteredTasks = searchQuery ? searchTasks(searchQuery) : [];
+  
+  const favoriteAgents = topAgents.filter(agent => 
+    localStorage.getItem('favoriteAgents') && 
+    JSON.parse(localStorage.getItem('favoriteAgents') || '[]').includes(agent.id)
+  );
   
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -76,10 +80,14 @@ export default function Home() {
           <TaskList tasks={activeTasks} title="Active Tasks" />
           
           <SectionHeading 
-            title="Top-Rated Agents" 
-            description="Highest rated AI agents based on user feedback"
+            title="Your Favorite Agents" 
+            description="Your personally curated collection of AI agents"
           />
-          <AgentGrid agents={topAgents} title="Top Agents" />
+          <AgentGrid 
+            agents={favoriteAgents} 
+            title="Favorite Agents" 
+            showFavorites={true} 
+          />
           
           <SectionHeading 
             title="Popular Agents" 

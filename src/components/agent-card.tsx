@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { StarRating } from "@/components/ui-custom/star-rating";
@@ -6,16 +5,23 @@ import { SkillBadge } from "@/components/ui-custom/skill-badge";
 import { StatusBadge } from "@/components/ui-custom/status-badge";
 import { AgentAvatar } from "@/components/ui-custom/agent-avatar";
 import { Agent } from "@/lib/types";
-import { MessageSquare, PlayCircle } from "lucide-react";
+import { MessageSquare, PlayCircle, Star } from "lucide-react";
 import { cn, truncateText } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
 interface AgentCardProps {
   agent: Agent;
   className?: string;
+  isFavorite?: boolean;
+  onToggleFavorite?: (agentId: string) => void;
 }
 
-export function AgentCard({ agent, className }: AgentCardProps) {
+export function AgentCard({ 
+  agent, 
+  className,
+  isFavorite = false,
+  onToggleFavorite 
+}: AgentCardProps) {
   return (
     <Card className={cn("overflow-hidden border transition-all duration-300 hover:shadow-md hover:translate-y-[-2px]", className)}>
       <CardContent className="p-4">
@@ -31,11 +37,28 @@ export function AgentCard({ agent, className }: AgentCardProps) {
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between mb-1">
               <h3 className="font-medium text-base line-clamp-1">{agent.name}</h3>
-              <StatusBadge 
-                status={agent.status} 
-                type="agent"
-                className="ml-2"
-              />
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={() => onToggleFavorite?.(agent.id)}
+                >
+                  <Star 
+                    className={cn(
+                      "h-4 w-4",
+                      isFavorite ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"
+                    )} 
+                  />
+                  <span className="sr-only">
+                    {isFavorite ? "Remove from favorites" : "Add to favorites"}
+                  </span>
+                </Button>
+                <StatusBadge 
+                  status={agent.status} 
+                  type="agent"
+                />
+              </div>
             </div>
             
             <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
