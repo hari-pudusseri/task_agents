@@ -1,5 +1,3 @@
-//mongodb
-//hari/mongodb101
 
 /*
 echo "# test" >> README.md
