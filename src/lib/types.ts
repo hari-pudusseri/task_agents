@@ -13,9 +13,9 @@ export enum TaskStatus {
 }
 
 export enum TaskPriority {
-  HIGH = "high",
+  LOW = "low",
   MEDIUM = "medium",
-  LOW = "low"
+  HIGH = "high"
 }
 
 export interface Skill {

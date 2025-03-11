@@ -12,7 +12,12 @@ import {
   Menu,
   X,
   ChevronDown,
-  Bot
+  Bot,
+  Building2,
+  ShoppingCart,
+  FileText,
+  Receipt,
+  Home
 } from "lucide-react";
 
 interface MainLayoutProps {
@@ -22,6 +27,7 @@ interface MainLayoutProps {
 export function MainLayout({ children }: MainLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [agentHubOpen, setAgentHubOpen] = useState(true);
+  const [procurementOpen, setProcurementOpen] = useState(true);
   const location = useLocation();
 
   const agentHubItems = [
@@ -49,6 +55,39 @@ export function MainLayout({ children }: MainLayoutProps) {
       name: "Settings",
       path: "/settings",
       icon: SettingsIcon,
+    },
+  ];
+
+  const procurementItems = [
+    {
+      name: "Home",
+      path: "/procurement",
+      icon: Home,
+    },
+    {
+      name: "Agents",
+      path: "/procurement/agents",
+      icon: Bot,
+    },
+    {
+      name: "Purchases",
+      path: "/procurement/purchases",
+      icon: ShoppingCart,
+    },
+    {
+      name: "Suppliers",
+      path: "/procurement/suppliers",
+      icon: Building2,
+    },
+    {
+      name: "Contracts",
+      path: "/procurement/contracts",
+      icon: FileText,
+    },
+    {
+      name: "Invoices",
+      path: "/procurement/invoices",
+      icon: Receipt,
     },
   ];
 
@@ -90,7 +129,7 @@ export function MainLayout({ children }: MainLayoutProps) {
             </div>
 
             <nav className="flex-1 overflow-y-auto p-3">
-              <div className="space-y-1">
+              <div className="space-y-3">
                 {/* AI Agent Hub Section */}
                 <div>
                   <Button
@@ -102,17 +141,55 @@ export function MainLayout({ children }: MainLayoutProps) {
                       <Bot className="h-5 w-5 mr-2" />
                       <span className="font-medium">AI Agent Hub</span>
                     </div>
-                    <ChevronDown 
-                      className={cn(
-                        "h-4 w-4 transition-transform",
-                        agentHubOpen ? "transform rotate-180" : ""
-                      )} 
-                    />
+                    <ChevronDown className={cn(
+                      "h-4 w-4 transition-transform",
+                      agentHubOpen ? "transform rotate-180" : ""
+                    )} />
                   </Button>
                   
                   {agentHubOpen && (
                     <ul className="mt-1 space-y-1 pl-7">
                       {agentHubItems.map((item) => (
+                        <li key={item.path}>
+                          <Link
+                            to={item.path}
+                            className={cn(
+                              "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-secondary",
+                              location.pathname === item.path
+                                ? "bg-secondary text-accent"
+                                : "text-foreground"
+                            )}
+                            onClick={() => setSidebarOpen(false)}
+                          >
+                            <item.icon className="h-4 w-4" />
+                            <span>{item.name}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+
+                {/* Procurement Section */}
+                <div>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-between"
+                    onClick={() => setProcurementOpen(!procurementOpen)}
+                  >
+                    <div className="flex items-center">
+                      <ShoppingCart className="h-5 w-5 mr-2" />
+                      <span className="font-medium">Procurement</span>
+                    </div>
+                    <ChevronDown className={cn(
+                      "h-4 w-4 transition-transform",
+                      procurementOpen ? "transform rotate-180" : ""
+                    )} />
+                  </Button>
+                  
+                  {procurementOpen && (
+                    <ul className="mt-1 space-y-1 pl-7">
+                      {procurementItems.map((item) => (
                         <li key={item.path}>
                           <Link
                             to={item.path}
