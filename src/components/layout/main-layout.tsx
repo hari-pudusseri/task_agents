@@ -169,46 +169,6 @@ export function MainLayout({ children }: MainLayoutProps) {
                     </ul>
                   )}
                 </div>
-
-                {/* Procurement Section */}
-                <div>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-between"
-                    onClick={() => setProcurementOpen(!procurementOpen)}
-                  >
-                    <div className="flex items-center">
-                      <ShoppingCart className="h-5 w-5 mr-2" />
-                      <span className="font-medium">Procurement</span>
-                    </div>
-                    <ChevronDown className={cn(
-                      "h-4 w-4 transition-transform",
-                      procurementOpen ? "transform rotate-180" : ""
-                    )} />
-                  </Button>
-                  
-                  {procurementOpen && (
-                    <ul className="mt-1 space-y-1 pl-7">
-                      {procurementItems.map((item) => (
-                        <li key={item.path}>
-                          <Link
-                            to={item.path}
-                            className={cn(
-                              "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-secondary",
-                              location.pathname === item.path
-                                ? "bg-secondary text-accent"
-                                : "text-foreground"
-                            )}
-                            onClick={() => setSidebarOpen(false)}
-                          >
-                            <item.icon className="h-4 w-4" />
-                            <span>{item.name}</span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
               </div>
             </nav>
 
